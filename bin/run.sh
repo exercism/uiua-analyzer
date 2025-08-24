@@ -21,6 +21,29 @@ if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ]; then
     exit 1
 fi
 
+analyze_files() {
+    TEMP1=$(mktemp)
+    
+    for file in "$1"/*; do
+        uiua run "$file" | tr '\n' '\\' | sed 's/\\/\\n/g' >> "$TEMP1"
+    done
+    
+    RESULT=$(cat "$TEMP1" | paste -sd '' - | jq -R @json)
+    
+    echo "{\"in\":${RESULT}}"  | jq '
+.
+| .["in"]
+| split("─")
+| map(select(. != ""))
+| map(gsub("^\\s+|\\s+$"; ""))
+| map(select(. | test("(Warning|Advice|Style):")))
+| map({
+    comment: "uiua.general.generic_message",
+    params: { in: . }
+  })
+    '
+}
+
 slug="$1"
 solution_dir=$(realpath "${2%/}")
 output_dir=$(realpath "${3%/}")
@@ -33,10 +56,10 @@ mkdir -p "${output_dir}"
 echo "${slug}: analyzing..."
 
 # Analyze the solution
-# TODO: replace the below command with your own command(s) 
+# TODO: replace the below command with your own command(s)
 # to analyze the solution and output the analysis.json and
 # tags.json files
-echo '{"comments": []}' > "${analysis_file}"
+analyze_files $2 > "${analysis_file}"
 echo '{"tags": []}' > "${tags_file}"
 
 echo "${slug}: done"

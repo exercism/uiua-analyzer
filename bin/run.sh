@@ -39,7 +39,7 @@ analyze_files() {
 | map(select(. | test("(Warning|Advice|Style):")))
 | map({
     comment: "uiua.general.generic_message",
-    params: { in: . }
+    params: { comment: . }
   })
     '
 }

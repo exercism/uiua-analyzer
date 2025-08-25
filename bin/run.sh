@@ -23,8 +23,7 @@ fi
 
 analyze_files() {
     TEMP1=$(mktemp)
-    
-    for file in "$1"/*; do
+    for file in $1/*.ua; do
         uiua run "$file" | tr '\n' '\\' | sed 's/\\/\\n/g' >> "$TEMP1"
     done
     
@@ -41,6 +40,7 @@ analyze_files() {
     comment: "uiua.general.generic_message",
     params: { comment: . }
   })
+| {"comments": .}
     '
 }
 

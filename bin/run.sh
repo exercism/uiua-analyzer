@@ -23,24 +23,27 @@ fi
 
 analyze_files() {
     TEMP1=$(mktemp)
-    for file in $1/*.ua; do
-        uiua run "$file" | tr '\n' '\\' | sed 's/\\/\\n/g' >> "$TEMP1"
+    for file in "$1"/*.ua; do
+        # Only process files that exist (avoid globbing issues)
+        [ -e "$file" ] || continue
+        uiua run "$file" >> "$TEMP1"
     done
-    
-    RESULT=$(cat "$TEMP1" | paste -sd '' - | jq -R @json)
-    
-    echo "{\"in\":${RESULT}}"  | jq '
-.
-| .["in"]
-| split("─")
-| map(select(. != ""))
-| map(gsub("^\\s+|\\s+$"; ""))
-| map(select(. | test("(Warning|Advice|Style):")))
-| map({
-    comment: "uiua.general.generic_message",
-    params: { comment: . }
-  })
-| {"comments": .}
+
+    RESULT=$(cat "$TEMP1")
+
+    jq -n --arg in "$RESULT" '
+      {
+        comments: (
+          $in
+          | split("─")
+          | map(gsub("^\\s+|\\s+$"; ""))
+          | map(select(test("^(Warning|Advice|Style):")))
+          | map({
+              comment: "uiua.general.generic_message",
+              params: { comment: . }
+            })
+        )
+      }
     '
 }
 

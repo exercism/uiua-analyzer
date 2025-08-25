@@ -1,5 +1,5 @@
-#!/usr/bin/env sh
-
+#!/usr/bin/env sh 
+set -x # For debugging the ci, will be removed
 # Synopsis:
 # Run the analyzer on a solution.
 

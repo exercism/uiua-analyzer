@@ -24,7 +24,6 @@ fi
 analyze_files() {
     TEMP1=$(mktemp)
     for file in "$1"/*.ua; do
-        # Only process files that exist (avoid globbing issues)
         [ -e "$file" ] || continue
         uiua run "$file" >> "$TEMP1"
     done
@@ -37,7 +36,6 @@ analyze_files() {
           $in
           | split("─")
           | map(gsub("^\\s+|\\s+$"; ""))
-          | debug
           | map(gsub("(?s)\\n\\s+at.+?\\|"; "\n"))
           | map(select(test("^(Warning|Advice|Style):")))
           | map({

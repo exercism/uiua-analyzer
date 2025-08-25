@@ -3,7 +3,7 @@
     {
       "comment": "uiua.general.generic_message",
       "params": {
-        "comment": "\"Style: Prefer `⟜` over `⊃∘` for clarity\\n  at tests/style-issue//style-issue.ua:1:13\\n1 | Image ← ⊞+.÷⊃∘⇡100\\n"
+        "comment": "Style: Prefer `⟜` over `⊃∘` for clarity\n  at tests/style-issue//style-issue.ua:1:13\n1 | Image ← ⊞+.÷⊃∘⇡100"
       }
     }
   ]

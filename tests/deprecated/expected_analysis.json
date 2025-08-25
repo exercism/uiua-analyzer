@@ -3,7 +3,7 @@
     {
       "comment": "uiua.general.generic_message",
       "params": {
-        "comment": "Warning: ∵ each is deprecated and will be removed in a future version, use ≡ rows instead\n  at tests/deprecated//deprecated.ua:1:8\n1 | Logo ← ∵⊜"
+        "comment": "Warning: ∵ each is deprecated and will be removed in a future version, use ≡ rows instead\n Logo ← ∵⊜"
       }
     }
   ]

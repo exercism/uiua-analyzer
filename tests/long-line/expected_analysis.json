@@ -3,7 +3,7 @@
     {
       "comment": "uiua.general.generic_message",
       "params": {
-        "comment": "Advice: Split this into multiple lines (heuristic: 65/60) 😠\n  at tests/long-line//long-line.ua:1:1\n1 | Logo ← ⍜°⍉(⊂⊃(+0.1↧¤ ⊃((<⊙(⌵/ℂ))0.95|⊂⊙0.5⇌˙×)) (×⊃(=∩⌟<0.2 0.7 /+×⟜ⁿ1_2)((<⊙(⌵/ℂ))1))) ˙⊞⊟-⊸¬÷⟜⇡200"
+        "comment": "Advice: Split this into multiple lines (heuristic: 65/60) 😠\n Logo ← ⍜°⍉(⊂⊃(+0.1↧¤ ⊃((<⊙(⌵/ℂ))0.95|⊂⊙0.5⇌˙×)) (×⊃(=∩⌟<0.2 0.7 /+×⟜ⁿ1_2)((<⊙(⌵/ℂ))1))) ˙⊞⊟-⊸¬÷⟜⇡200"
       }
     }
   ]

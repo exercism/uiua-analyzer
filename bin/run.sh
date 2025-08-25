@@ -37,6 +37,8 @@ analyze_files() {
           $in
           | split("─")
           | map(gsub("^\\s+|\\s+$"; ""))
+          | debug
+          | map(gsub("(?s)\\n\\s+at.+?\\|"; "\n"))
           | map(select(test("^(Warning|Advice|Style):")))
           | map({
               comment: "uiua.general.generic_message",

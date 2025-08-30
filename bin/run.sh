@@ -40,7 +40,8 @@ analyze_files() {
           | map(select(test("^(Warning|Advice|Style):")))
           | map({
               comment: "uiua.general.generic_message",
-              params: { comment: . }
+              params: { comment: . },
+              type: (if . | test("^Warning:") then "actionable" else "informative" end)
             })
         )
       }

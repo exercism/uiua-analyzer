@@ -60,8 +60,6 @@ mkdir -p "${output_dir}"
 echo "${slug}: analyzing..."
 
 # Analyze the solution
-# to analyze the solution and output the analysis.json and
-# tags.json files
 analyze_files $2 > "${analysis_file}"
 echo '{"tags": []}' > "${tags_file}"
 

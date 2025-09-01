@@ -1,4 +1,4 @@
-FROM rust:1.82.0-alpine3.20 AS builder
+FROM rust:1.87.0-alpine3.20 AS builder
 
 RUN apk add --no-cache linux-headers make musl-dev
 

@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env sh 
 
 # Synopsis:
 # Run the analyzer on a solution.
@@ -21,6 +21,33 @@ if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ]; then
     exit 1
 fi
 
+analyze_files() {
+    TEMP1=$(mktemp)
+    for file in "$1"/*.ua; do
+        [ -e "$file" ] || continue
+        uiua run "$file" >> "$TEMP1"
+    done
+
+    RESULT=$(cat "$TEMP1")
+
+    jq -n --arg in "$RESULT" '
+      {
+        comments: (
+          $in
+          | split("─")
+          | map(gsub("^\\s+|\\s+$"; ""))
+          | map(gsub("(?s)\\n\\s+at.+?\\|"; "\n"))
+          | map(select(test("^(Warning|Advice|Style):")))
+          | map({
+              comment: "uiua.general.generic_message",
+              params: { comment: . },
+              type: (if . | test("^Warning:") then "actionable" else "informative" end)
+            })
+        )
+      }
+    '
+}
+
 slug="$1"
 solution_dir=$(realpath "${2%/}")
 output_dir=$(realpath "${3%/}")
@@ -33,10 +60,7 @@ mkdir -p "${output_dir}"
 echo "${slug}: analyzing..."
 
 # Analyze the solution
-# TODO: replace the below command with your own command(s) 
-# to analyze the solution and output the analysis.json and
-# tags.json files
-echo '{"comments": []}' > "${analysis_file}"
+analyze_files $2 > "${analysis_file}"
 echo '{"tags": []}' > "${tags_file}"
 
 echo "${slug}: done"

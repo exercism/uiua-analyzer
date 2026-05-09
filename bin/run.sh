@@ -25,7 +25,7 @@ analyze_files() {
     TEMP1=$(mktemp)
     for file in "$1"/*.ua; do
         [ -e "$file" ] || continue
-        uiua run "$file" >> "$TEMP1"
+        uiua run --no-color "$file" >> "$TEMP1" 2>&1
     done
 
     RESULT=$(cat "$TEMP1")
